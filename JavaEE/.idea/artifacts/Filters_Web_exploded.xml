@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="Filters:Web exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/Filters_Web_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="Filters/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="Filters" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="javax.json-1.1.42" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

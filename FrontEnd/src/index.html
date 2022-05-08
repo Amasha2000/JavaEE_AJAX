@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <title>Document</title>
+</head>
+<body>
+   <h1>Hello AJAX....</h1>
+<!--   <button id="button1">Send Request txt</button>-->
+   <form id="customerForm">
+<!--   <form id="customerForm" action="customer" method="post">-->
+       <div class="mb-3">
+           <label for="CusID" class="form-label">Customer ID</label>
+           <input type="text" class="form-control" id="CusID" aria-describedby="emailHelp" name="CustomerID">
+       </div>
+       <div class="mb-3">
+           <label for="CusName" class="form-label">Name</label>
+           <input type="text" class="form-control" id="CusName" name="CustomerName">
+       </div>
+       <div class="mb-3">
+           <label for="CusAddress" class="form-label">Address</label>
+           <input type="text" class="form-control" id="CusAddress" name="CustomerAddress">
+       </div>
+       <div class="mb-3">
+           <label for="CusSalary" class="form-label">Salary</label>
+           <input type="text" class="form-control" id="CusSalary" name="CustomerSalary">
+       </div>
+<!--       <button type="submit" class="btn btn-primary">Submit</button>-->
+       <button type="button" id="saveCustomer" class="btn btn-primary">Save</button>
+   </form>
+   <button id="button3" class="btn-warning">Get All</button>
+<!--   <button id="button2">Send Request Item</button>-->
+   <button id="button1" class="btn-danger">Delete Customer</button>
+   <button id="button4" class="btn-info">Update Customer</button>
+   <button id="button5" class="btn-success">Search Customer</button>
+   <p></p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Address</th>
+        <th scope="col">Salary</th>
+      </tr>
+    </thead>
+    <tbody id="json-table">
+      <tr>
+
+      </tr>
+      <tr>
+
+      </tr>
+      <tr>
+      </tr>
+    </tbody>
+  </table>
+<!--   <table class="table">-->
+<!--       <thead>-->
+<!--       <tr>-->
+<!--           <th scope="col">Code</th>-->
+<!--           <th scope="col">Description</th>-->
+<!--           <th scope="col">Quantity</th>-->
+<!--           <th scope="col">Unit Price</th>-->
+<!--       </tr>-->
+<!--       </thead>-->
+<!--       <tbody id="item-table">-->
+<!--       <tr>-->
+
+<!--       </tr>-->
+<!--       <tr>-->
+
+<!--       </tr>-->
+<!--       <tr>-->
+<!--       </tr>-->
+<!--       </tbody>-->
+<!--   </table>-->
+   <script src="assets/jquery-3.6.0.min.js"></script>
+   <script>
+       // $("#button1").click(function(){
+       //  $.ajax({
+       //    url:"http://localhost:8080/customer/customer",
+       //    success:function(response){
+       //      $("p").text(response);
+       //    }
+       //  });
+       // });
+       //
+
+       function loadAllCustomers(){
+           $("#json-table").empty();
+           $.ajax({
+               url:"http://localhost:8080/Filters_Web_exploded/customer?option=GETALL",
+               method:"GET",
+               //dataType:"json",
+               success:function(resp){
+                   for(var i=0;i<resp.data.length;i++){
+                       $("#json-table").append(`<tr><td>${resp.data[i].id}</td><td>${resp.data[i].name}</td><td>${resp.data[i].address}</td><td>${resp.data[i].salary}</td></tr>`);
+                   }
+                   loadDetailsToTable();
+               }
+           });
+       }
+
+        $("#button3").click(function(){
+          loadAllCustomers();
+        });
+
+       // $("#button2").on("click",function(){
+       //     $("#item-table").empty();
+       //     $.ajax({
+       //         url:"item",
+       //         method:"GET",
+       //         //dataType:"json",
+       //         success:function(resp){
+       //             for(var i=0;i<resp.length;i++){
+       //                 $("#item-table").append(`<tr><td>${resp[i].code}</td><td>${resp[i].description}</td><td>${resp[i].quantity}</td><td>${resp[i].price}</td></tr>`)
+       //             }
+       //         }
+       //     });
+       // });
+
+       $("#saveCustomer").click(function () {
+           var data=$("#customerForm").serialize();//return query string of form with name:type-value
+          $.ajax({
+              url:"http://localhost:8080/Filters_Web_exploded/customer",
+              method:"POST",
+              data:data,//if we send data with the request
+              success:function (res) {
+                  if(res.status == 200){
+                      alert(res.message);
+                      loadAllCustomers();
+                      loadDetailsToTable();
+                  }
+              },
+              error:function (ob,textStatus,error){
+                  alert(textStatus);
+                  //console.log(ob.responseText);
+              }
+          }) ;
+       });
+
+       function loadDetailsToTable() {
+           $("#json-table tr").click(function () {
+               console.log("Hi");
+               $("#CusID").val($(this).children(':nth-child(1)').text());
+               $("#CusName").val($(this).children(':nth-child(2)').text());
+               $("#CusAddress").val($(this).children(':nth-child(3)').text());
+               $("#CusSalary").val($(this).children(':nth-child(4)').text());
+           });
+       }
+
+       $("#button1").click(function (){
+           let cusID=$("#CusID").val();
+           $.ajax({
+               url:"http://localhost:8080/Filters_Web_exploded/customer?CustomerID="+cusID,
+               method:"DELETE",
+               success:function(res) {
+                   if (res.status == 200) {
+                       alert(res.message);
+                       loadAllCustomers();
+                       loadDetailsToTable();
+                   } else if (res.status == 400) {
+                       alert(res.data);
+                   } else {
+                       alert(res.data);
+                   }
+               },
+               error:function (ob,status,t){
+                   alert(ob);
+               }
+           });
+       });
+
+       $("#button5").click(function (){
+           let cusID=$("#CusID").val();
+           $.ajax({
+               url:"customer?option=SEARCH,CustomerID="+cusID,
+               method:"GET",
+               success:function(res) {
+                   if (res.status == 200) {
+                       console.log(res.data);
+                       alert(res.message);
+                   } else if (res.status == 400) {
+                       alert(res.message);
+                   } else {
+                       alert(res.message);
+                   }
+               },
+               error:function (ob,status,t){
+                   alert(status);
+               }
+           });
+       });
+
+       $("#button4").click(function (){
+           var cusOb={
+               id:$("#CusID").val(),
+               name:$("#CusName").val(),
+               address:$("#CusAddress").val(),
+               salary:$("#CusSalary").val(),
+           }
+
+           $.ajax({
+               url:"http://localhost:8080/Filters_Web_exploded/customer",
+               method:"PUT",
+               contentType:"application/json",
+               data:JSON.stringify(cusOb),
+               success:function (res){
+                   if(res.status == 200) {
+                       alert(res.message);
+                       loadAllCustomers();
+                       loadDetailsToTable();
+                   }else if(res.status == 400){
+                         alert(res.message);
+                       } else{
+                       alert(res.data);
+                   }
+
+               },
+               error:function (ob,status,t){
+                   alert(ob);
+               }
+           })
+       });
+</script>
+</body>
+</html>
