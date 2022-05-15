@@ -9,5 +9,5 @@
             password="1234"
             maxTotal="5"
             initialSize="5"
-    >
+    ></Resource>
 </Context>
