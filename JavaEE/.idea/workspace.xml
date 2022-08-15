@@ -6,11 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1504e55f-9ec0-421b-8395-af963b7398ae" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../Filters/src/CustomerServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Filters/src/CustomerServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Filters/web/META-INF/context.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Filters/web/META-INF/context.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../InBuildCP/web/META-INF/context.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../InBuildCP/web/META-INF/context.xml" afterDir="false" />
-    </list>
+    <list default="true" id="1504e55f-9ec0-421b-8395-af963b7398ae" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -168,6 +164,12 @@
       <workItem from="1652428125898" duration="4838000" />
       <workItem from="1652506586787" duration="15745000" />
       <workItem from="1652588219704" duration="5779000" />
+      <workItem from="1652626629358" duration="2059000" />
+      <workItem from="1652764844230" duration="1835000" />
+      <workItem from="1652784084925" duration="193000" />
+      <workItem from="1652786025604" duration="20000" />
+      <workItem from="1652786605995" duration="286000" />
+      <workItem from="1652791838191" duration="206000" />
     </task>
     <servers />
   </component>
